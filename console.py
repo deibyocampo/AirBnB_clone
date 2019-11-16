@@ -64,7 +64,7 @@ class HBNBCommand(cmd.Cmd):
                 models.storage.save()
 
     def do_all(self, alls):
-        """ """
+        """ all objet the instance """
         data = models.storage.all()
         if alls is "":
             for keys, objs in data.items():
@@ -78,6 +78,29 @@ class HBNBCommand(cmd.Cmd):
                     obj = objs.to_dict()
                     if obj['__class__'] == arg[0]:
                         print(obj)
+
+    def do_update(self, update):
+        """ updates an instance based on the class"""
+        data = models.storage.all()
+        arg = update.split()
+        if not update:
+            print("** class name missing **")
+        elif arg[0] not in self.clss:
+            print("** class doesn't exist **")
+        elif len(arg) < 2:
+            print("** instance id missing **")
+        else:
+            key = "{}.{}".format(arg[0], arg[1])
+            if key in data:
+                if len(arg) < 3:
+                    print("** attribute name missing **")
+                elif len(arg) < 4:
+                    print("** value missing **")
+                else:
+                    obj = data[key]
+                    setattr(obj, arg[2], arg[3])
+            else:
+                print("** no instance found **")
 
     def do_EOF(self, line):
         """ Quit command to exit the program\n """
