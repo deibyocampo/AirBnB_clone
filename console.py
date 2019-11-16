@@ -5,13 +5,21 @@ console - this console contains the entry point
 
 import cmd
 import models
+import shlex
 from models.base_model import BaseModel
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.state import State
+from models.review import Review
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
     """ class HBNBCommand """
     prompt = "(hbnb) "
-    clss = {'BaseModel'}
+    clss = {'BaseModel', 'User', 'State', 'City',
+            'Amenity', 'Place', 'Review'}
 
     def do_create(self, create):
         """ create instance de basemodel
